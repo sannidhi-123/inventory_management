@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - ProdStore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6a5acd;
+            --primary-hover: #5a4bbf;
+            --success-color: #22c55e;
+            --success-hover: #16a34a;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --background-page: #f8f9fa;
+            --surface-color: #ffffff;
+            --border-color: #e5e7eb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-page);
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .continue-shopping-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .continue-shopping-btn:hover {
+            color: var(--primary-hover);
+        }
+
+        .cart-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .cart-items-list {
+            background-color: var(--surface-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+            gap: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .item-details {
+            flex-grow: 1;
+        }
+
+        .item-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .item-stock-info {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 0.75rem;
+        }
+        
+        .stock-error {
+            color: var(--danger-color);
+            font-weight: 500;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .quantity-btn {
+            background-color: var(--background-page);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            transition: all 0.2s;
+        }
+        
+        .quantity-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .item-quantity {
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .item-total-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .order-summary {
+            background-color: var(--surface-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            position: sticky;
+            top: 2rem;
+        }
+        
+        .order-summary h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        
+        .summary-row.total {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--success-color);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-top: 1rem;
+        }
+        
+        .checkout-btn:hover {
+            background-color: var(--success-hover);
+            transform: translateY(-2px);
+        }
+        
+        .checkout-btn:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 4rem;
+            background-color: var(--surface-color);
+            border-radius: 12px;
+        }
+
+        @media (max-width: 992px) {
+            .cart-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .item-total-price {
+                text-align: left;
+                margin-top: 1rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Your Cart</h1>
+            <a href="{{ url_for('users') }}" class="continue-shopping-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" /></svg>
+                Continue Shopping
+            </a>
+        </header>
+
+        {% if cart %}
+        <div class="cart-layout">
+            <div class="cart-items-list">
+                {% for item in cart %}
+                <div class="cart-item">
+                    <img src="{{ item.image_url }}" alt="{{ item.name }}" class="item-image" onerror="this.src='https://placehold.co/100x100/e2e8f0/6b7280?text=No+Img'">
+                    <div class="item-details">
+                        <div class="item-name">{{ item.name }}</div>
+                        <div class="item-stock-info">
+                            Available: {{ item.stock }}
+                            {% if item.stock_error %}
+                                <span class="stock-error">Not enough stock!</span>
+                            {% endif %}
+                        </div>
+                        <div class="quantity-controls">
+                            <form method="POST" style="display: inline;">
+                                <input type="hidden" name="item_id" value="{{ item.item_id }}">
+                                <input type="hidden" name="action" value="decrease">
+                                <button type="submit" class="quantity-btn" aria-label="Decrease quantity">-</button>
+                            </form>
+                            <span class="item-quantity">{{ item.cart_quantity }}</span>
+                            <form method="POST" style="display: inline;">
+                                <input type="hidden" name="item_id" value="{{ item.item_id }}">
+                                <input type="hidden" name="action" value="increase">
+                                <button type="submit" class="quantity-btn" aria-label="Increase quantity">+</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="item-total-price">₹{{ "%.2f"|format(item.price * item.cart_quantity) }}</div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="order-summary">
+                <h2>Order Summary</h2>
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span>₹{{ "%.2f"|format(total) }}</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span>FREE</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span>₹{{ "%.2f"|format(total) }}</span>
+                </div>
+                <form action="{{ url_for('checkout') }}" method="POST">
+                    <button type="submit" class="checkout-btn" {% if stock_error %}disabled{% endif %}>
+                        Proceed to Checkout
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% else %}
+        <div class="empty-cart">
+            <h2>Your cart is empty.</h2>
+            <p>Looks like you haven't added anything to your cart yet.</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
