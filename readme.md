@@ -136,9 +136,9 @@ project/
 
 ## 🧑‍💻 Author
 
-Developed by **Your Name**  
-📧 your.email@example.com  
-🌐 [GitHub](https://github.com/darshanchouthai)
+Developed by 
+Sannidhi Chouthayi
+📧 sannidhichouthayi@gmail.com
 
 ---
 
